@@ -1,0 +1,52 @@
+.TH DTA_DISC 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_DISC() - Terminate a connection.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_DISC(DTAHCONN hconn);
+
+.SH PARAMETERS
+.TP 15
+hconn        -
+Handle of connection. Create by DTA_CONN().
+
+.SH DESCRIPTION
+DTA_DISC() disconnect the connection establish by DTA_CONN().
+To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_SOCKETCLOSE_ERROR
+Socket close failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHCONN hconn;
+
+DTA_CONN(&hconn,"192.22.33.44");
+
+    .
+    .
+    .
+
+DTA_DISC(hconn);
+
+.SH SEE ALSO
+DTA_CONN(3)
+
+
+

@@ -1,0 +1,31 @@
+#!/bin/sh
+# Attempt to guess a canonical system name.
+
+STDMAKE_SYS=stdmk.lnx
+
+#检测系统环境
+OS_NAME=`uname -s`
+case ${OS_NAME} in
+    AIX)
+        STDMAKE_SYS=stdmk.ibm$(APP_BIT)
+        ;;
+    HP-UX)
+        STDMAKE_SYS=stdmk.hp$(APP_BIT)
+        ;;
+    LINUX|Linux)
+        STDMAKE_SYS=stdmk.lnx$(APP_BIT)
+        ;;
+    SunOS)
+        STDMAKE_SYS=stdmk.sun$(APP_BIT)
+        ;;
+    Windows_NT*|WindowsNT|CYGWIN*|cygwin*)
+        STDMAKE_SYS=stdmk.lnx$(APP_BIT)
+        ;;
+    *)
+        STDMAKE_SYS=stdmk.lnx$(APP_BIT)
+esac
+
+#打印使用的变量
+echo ${STDMAKE_SYS}
+
+           

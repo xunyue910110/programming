@@ -1,0 +1,68 @@
+.TH DTA_PUT 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_PUT() - Put file to remote host.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_PUT(DTAHCONN hconn,const char *sourcefile,const char *targetfile);
+
+.SH PARAMETERS
+.TP 15
+hconn        -
+Handle of connection.
+.TP
+sourcefile   -
+File name of source.
+.TP
+targetfile   -
+File name of target.
+
+.SH DESCRIPTION
+DTA_PUT() put file to remote host through the connection established by
+DTA_CONN(). To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_SOCKETWRITE_ERROR
+Socket write error.
+.TP
+.ER DTARC_SOCKETREAD_ERROR
+Socket read error.
+.TP
+.ER DTARC_FILEOPEN_ERROR
+File not found or open failed.
+.TP
+.ER DTARC_FILESEEK_ERROR
+fseek() failed.
+.TP
+.ER DTARC_FILECLOSE_ERROR
+File close failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHCONN hconn;
+
+DTA_CONN(&hconn,"192.22.33.44");
+
+DTA_PUT(hconn,"myfile1","myfile2");
+
+DTA_DISC(hconn);
+
+.SH SEE ALSO
+DTA_GET(3)
+
+
+

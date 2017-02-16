@@ -1,0 +1,55 @@
+#include <cstdio>
+//include <iostream>
+void showvar(int var)
+{
+    for (int i = 0; i < 32; i++)
+    {
+        var & (0x01 << (31-i))   ?  printf("1")  : printf("0");
+        if ( (i+1) % 8 == 0) printf(" ");
+        //if ( (i+1) % 32 == 0) printf("\n");
+        //(var & (0x01 << (31-i)))   ?  std::cout << "1" : std::cout << "0";
+    }
+}
+
+void showvar2(int var)
+{
+  typedef unsigned char uc;
+  uc * p = (uc*)&var;
+  p = p + 3;
+  for (int w = 0; w < sizeof(var); w++, --p)
+  {
+    for (int i = 0; i < 8; i++)
+     *p & (0x01 << (7-i)) ? printf("1") : printf("0");
+    printf(" ");
+  }  
+  
+}
+//内存中真实数据， 从低位开始存储， 先输出每一字节，依次..
+void showvar3(int var)
+{
+  typedef unsigned char uc;
+  uc * p = (uc*)&var;
+//  p = p + 3;
+  for (int w = 0; w < sizeof(var); w++, ++p)
+  {
+    uc byte01 = 0x80;
+    for (int i = 0; i < 8; i++)
+    {
+      putchar(*p & (byte01) ? '1': '0');
+      byte01 >>= 1;  
+    }
+//     *p & (0x80 >> i) ? printf("1") : printf("0");
+    printf(" ");
+  }  
+  
+}
+int main()
+{
+    showvar(0x3276ff01); 
+    printf("\n");
+    showvar2(0x3276ff01); 
+    printf("\n");
+    showvar3(0x3276ff01); 
+
+  std::printf("%s", "1");
+}

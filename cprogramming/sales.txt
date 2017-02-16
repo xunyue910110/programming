@@ -1,0 +1,6 @@
+Python Programming on Win32	O’Reilly
+C++ primer	Addison-Wesley
+Beginning Linux Programming	Wiley Publishing,Inc.
+Professional C++	John Wiley & Sons,Inc.
+Programming with POSIX threads	Addison-Wesley
+C++ primer	Addison-Wesley

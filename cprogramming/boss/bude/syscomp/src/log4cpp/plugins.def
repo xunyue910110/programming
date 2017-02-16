@@ -1,0 +1,23 @@
+#ifndef PLUGINS_DEF
+#define PLUGINS_DEF
+
+
+#include "ConsoleAppender.h"
+#include "DailyFileAppender.h"
+#include "HessianFormatter.h"
+#include "StdFormatter.h"
+#include "ExporterAppender.h"
+#include "UdpAppender.h"
+
+namespace log4cpp {
+REGISTER_FORMATTER("com.linkage.logger.StdFormatter", StdFormatter);
+REGISTER_FORMATTER("com.linkage.logger.HessianFormatter", HessianFormatter);
+REGISTER_APPENDER("com.linkage.logger.DailyFileAppender", DailyFileAppender);
+REGISTER_APPENDER("com.linkage.logger.ConsoleAppender", ConsoleAppender);
+REGISTER_APPENDER("com.linkage.toptea.logger.UdpAppender",UdpAppender);
+REGISTER_APPENDER("com.linkage.toptea.logger.ExporterAppender",ExporterAppender);
+}
+
+
+#endif
+

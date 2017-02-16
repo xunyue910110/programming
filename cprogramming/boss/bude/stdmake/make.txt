@@ -1,0 +1,557 @@
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+ NNNNAAAAMMMMEEEE
+      make - maintain, update, and regenerate groups of programs
+
+ SSSSYYYYNNNNOOOOPPPPSSSSIIIISSSS
+      mmmmaaaakkkkeeee [----ffff _m_a_k_e_f_i_l_e] [----bbbbBBBBddddeeeeiiiikkkknnnnppppPPPPqqqqrrrrssssSSSSttttuuuuwwww] [_m_a_c_r_o__n_a_m_e====_v_a_l_u_e] [_n_a_m_e_s]
+
+ DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
+    MMMMaaaakkkkeeeeffffiiiilllleeee SSSSttttrrrruuuuccccttttuuuurrrreeee
+      A makefile can contain four different kinds of lines: target lines,
+      shell command lines, macro definitions, and include lines.
+
+      TTTTaaaarrrrggggeeeetttt LLLLiiiinnnneeeessss
+      Target lines consist of a blank-separated, nonnull list of targets,
+      followed by a colon (::::) or double colon (::::::::), followed by a (possibly
+      null) list of prerequisite files called ddddeeeeppppeeeennnnddddeeeennnnttttssss.  Pattern Matching
+      Notation (see _r_e_g_e_x_p(5)) is supported for the generation of file names
+      as dependents.
+
+      SSSShhhheeeellllllll CCCCoooommmmmmmmaaaannnndddd LLLLiiiinnnneeeessss
+      Text following a semicolon (;;;;) on a target line, and all following
+      lines that begin with a tab are shell commands to be executed to
+      update the target (see the _E_n_v_i_r_o_n_m_e_n_t subsection below about SSSSHHHHEEEELLLLLLLL).
+      The first line that does not begin with a tab or #### begins a new target
+      definition, macro definition, or include line.  Shell commands can be
+      continued across lines by using a <backslash><newline> sequence.
+
+      Target lines with their associated command lines are called _r_u_l_e_s.
+
+      MMMMaaaaccccrrrroooossss
+      Lines of the form _s_t_r_i_n_g_1 ==== _s_t_r_i_n_g_2 are macro definitions.  Macros can
+      be defined anywhere in the makefile, but are usually grouped together
+      at the beginning.  _s_t_r_i_n_g_1 is the macro name; _s_t_r_i_n_g_2 is the macro
+      value.  _s_t_r_i_n_g_2 is defined as all characters up to a comment character
+      or an unescaped newline.  Spaces and tabs immediately to the left and
+      right of the ==== are ignored.  Subsequent appearances of $$$$((((_s_t_r_i_n_g_1))))
+      anywhere in the makefile (except in comments) are replaced by _s_t_r_i_n_g_2.
+      The parentheses are optional if a single character macro name is used
+      and there is no substitute sequence.  An optional substitute sequence,
+      $$$$((((_s_t_r_i_n_g_1 [::::_s_u_b_s_t_1====[_s_u_b_s_t_2]])))) can be specified, which causes all
+      nonoverlapping occurrences of _s_u_b_s_t_1 at the end of substrings in the
+      value of _s_t_r_i_n_g_1 to be replaced by _s_u_b_s_t_2.  Substrings in a macro
+      value are delimited by blanks, tabs, newline characters, and
+      beginnings of lines.  For example, if
+
+           OOOOBBBBJJJJSSSS ==== ffffiiiilllleeee1111....oooo ffffiiiilllleeee2222....oooo ffffiiiilllleeee3333....oooo
+
+      then
+
+           $$$$((((OOOOBBBBJJJJSSSS::::....oooo====....cccc))))
+
+
+
+
+
+ Hewlett-Packard Company            - 1 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+      evaluates to
+
+           ffffiiiilllleeee1111....cccc ffffiiiilllleeee2222....cccc ffffiiiilllleeee3333....cccc
+
+      Macro values can contain references to other macros (see the _W_A_R_N_I_N_G_S
+      section):
+
+           OOOONNNNEEEE ====1111
+
+           TTTTWWWWEEEELLLLVVVVEEEE ==== $$$$((((OOOONNNNEEEE))))2222
+
+      The value of $$$$((((TTTTWWWWEEEELLLLVVVVEEEE)))) is set to $$$$((((OOOONNNNEEEE))))2222 but when it is used in a
+      target, command, or include line, it is expanded to 11112222.  If the value
+      of OOOONNNNEEEE is subsequently changed by another definition further down in
+      the makefile or on the command line, any references to $$$$((((TTTTWWWWEEEELLLLVVVVEEEE))))
+      reflect this change.
+
+      Macro definitions can also be specified on the command line and
+      override any definitions in the makefile.
+
+      (UNIX Standard only, see _s_t_a_n_d_a_r_d_s(5).  Macros on the command line are
+      added to the MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable.  Macros defined in the
+      MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable, but without any command line macro,
+      adds the macro to the environment overwriting any existing environment
+      variable of the same name.)
+
+      Certain macros are automatically defined for mmmmaaaakkkkeeee (see Built-in
+      Macros).  See the _E_n_v_i_r_o_n_m_e_n_t subsection for a discussion of the order
+      in which macro definitions are treated.
+
+      The value assigned to a macro can be overridden by a conditional macro
+      definition.  A conditional macro definition takes on the form _t_a_r_g_e_t
+      ::::==== _s_t_r_i_n_g_1 ==== _s_t_r_i_n_g_2.  When the target line associated with target is
+      being processed, the macro value specified in the conditional macro
+      definition is in effect.  If _s_t_r_i_n_g_1 is previously defined, the new
+      value of _s_t_r_i_n_g_1 will override the previous definition.  The new value
+      of _s_t_r_i_n_g_1 takes effect when target or any dependents of target are
+      being processed.
+
+      IIIInnnncccclllluuuuddddeeee LLLLiiiinnnneeeessss
+      If the string iiiinnnncccclllluuuuddddeeee appears as the first seven letters of a line in
+      a makefile, and is followed by one or more space or tab characters,
+      the rest of the line is assumed to be a file name and is read and
+      processed by the current invocation of mmmmaaaakkkkeeee as another makefile after
+      any macros in the file name have been expanded.
+
+      The default behaviour of mmmmaaaakkkkeeee is to use ....DDDDEEEEFFFFAAAAUUUULLLLTTTT built-in target, if
+      target does not have explicit commands associated with it and ....DDDDEEEEFFFFAAAAUUUULLLLTTTT
+      target is defined.  See the _B_u_i_l_t-_I_n _T_a_r_g_e_t_s subsection.
+
+
+
+
+
+ Hewlett-Packard Company            - 2 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+    GGGGeeeennnneeeerrrraaaallll DDDDeeeessssccccrrrriiiippppttttiiiioooonnnn
+      mmmmaaaakkkkeeee executes commands previously placed in a makefile to update one
+      or more target names.  Target names are typically names of programs.
+      If no ----ffff option is specified, the file names mmmmaaaakkkkeeeeffffiiiilllleeee, MMMMaaaakkkkeeeeffffiiiilllleeee,
+      ssss....mmmmaaaakkkkeeeeffffiiiilllleeee, SSSSCCCCCCCCSSSS////ssss....mmmmaaaakkkkeeeeffffiiiilllleeee, ssss....MMMMaaaakkkkeeeeffffiiiilllleeee and SSSSCCCCCCCCSSSS////ssss....MMMMaaaakkkkeeeeffffiiiilllleeee are tried
+      in that order.  If ----ffff ---- is specified, the standard input is used.
+      More than one ----ffff option can be specified.  The makefile arguments are
+      processed in the order specified.  A space between the ----ffff and the file
+      name mmmmuuuusssstttt be present, and multiple makefile names must each have their
+      own ----ffff option preceding them.  The contents of a makefile override the
+      built-in rules and macros if they are present.
+
+      If no target names are specified on the command line, mmmmaaaakkkkeeee updates the
+      first target in the (first) makefile that is not an inference rule.  A
+      target is updated in two cases: firstly, if it depends on files that
+      are newer than the target; secondly, if it depends on files that have
+      same modification time as that of the target.  Missing files are
+      deemed to be out-of-date.  All dependents of a target are recursively
+      updated, if necessary, before the target is updated.  This effects a
+      depth-first update of the dependency tree for the target.
+
+      If a target does not have any dependents specified after the separator
+      on the target line (_e_x_p_l_i_c_i_t _d_e_p_e_n_d_e_n_t_s), any shell commands
+      associated with that target are executed if the target does not exist.
+
+      A target line can have either a single or double colon between the
+      target name or names and any explicit dependent names.  A target name
+      can appear on more than one target line, but all of those lines must
+      be of the same (single- or double-colon) type.  For the usual single-
+      colon case, at most one of these target lines can have explicit
+      commands associated with it.  If the target is out-of-date with any of
+      its dependents on any of the lines, the explicit commands are
+      executed, if they are specified, or else a default rule can be
+      executed.  For the double-colon case, explicit commands can be
+      associated with more than one of the target lines containing the
+      target name; if the target is out-of-date with any of the dependents
+      on a particular line, the commands for that line are executed.  A
+      built-in rule may also be executed.
+
+      Target lines and their associated shell command lines are also
+      referred to as rrrruuuulllleeeessss.  Hash marks (####) and newline characters surround
+      comments anywhere in the makefile except in rules.  Comments in the
+      rules depend on the setting of the SSSSHHHHEEEELLLLLLLL macro.
+
+      The following makefile says that ppppggggmmmm depends on two files: aaaa....oooo and
+      bbbb....oooo, and that they in turn depend on their corresponding source files
+      (aaaa....cccc and bbbb....cccc) and a common file iiiinnnnccccllll....hhhh:
+
+           OOOOBBBBJJJJSSSS ==== aaaa....oooo bbbb....oooo
+
+
+
+
+
+ Hewlett-Packard Company            - 3 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+           ppppggggmmmm:::: $$$$((((OOOOBBBBJJJJSSSS))))
+               cccccccc $$$$((((OOOOBBBBJJJJSSSS)))) ----oooo ppppggggmmmm
+
+           aaaa....oooo:::: iiiinnnnccccllll....hhhh aaaa....cccc
+               cccccccc ----cccc aaaa....cccc
+
+           bbbb....oooo:::: iiiinnnnccccllll....hhhh bbbb....cccc
+               cccccccc ----cccc bbbb....cccc
+
+      Command lines are executed one at a time, each by its own shell.  Each
+      command line can have one or more of the following prefixes: ----, @@@@, or
+      ++++.  These prefixes are explained below.
+
+      Commands returning nonzero status normally terminate mmmmaaaakkkkeeee.  The ----iiii
+      option or the presence of the special target ....IIIIGGGGNNNNOOOORRRREEEE in the makefile
+      cause mmmmaaaakkkkeeee to continue executing the makefile regardless of how many
+      command lines cause errors, although the error messages are still
+      printed on standard output.  If ---- is present at the beginning of a
+      command line, any error returned by that line is printed to standard
+      output but mmmmaaaakkkkeeee does not terminate.  The prefix ---- can be used to
+      selectively ignore errors in a makefile.  If the ----kkkk option is
+      specified and a command line returns an error status, work is
+      abandoned on the current target, but continues on other branches that
+      do not depend on that target.  If the ----kkkk option is present in the
+      MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable, processing can be returned to the
+      default by specifying the ----SSSS option.
+
+      The ----nnnn option specifies printing of a command line without execution.
+      However, if the command line has the string $$$$((((MMMMAAAAKKKKEEEE)))) or $$$${{{{MMMMAAAAKKKKEEEE}}}} in it
+      or ++++ as a prefix, the line is always executed (see discussion of the
+      MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS macro under _E_n_v_i_r_o_n_m_e_n_t).  The ----tttt (touch) option updates the
+      modified date of a file without executing any commands.
+
+      A command line is normally printed before it is executed, but if the
+      line has a @@@@ at the beginning, printing is suppressed.  The ----ssss option
+      or the presence of the special target ....SSSSIIIILLLLEEEENNNNTTTT:::: in the makefile
+      suppresses printing of all command lines.  The @@@@ can be used to
+      selectively turn off printing.  Everything printed by mmmmaaaakkkkeeee (except the
+      initial tab) is passed directly to the shell without alteration.
+      Thus,
+
+           eeeecccchhhhoooo aaaa\\\\
+           bbbb
+
+      produces
+
+           aaaabbbb
+
+      just as the shell would.
+
+
+
+
+
+ Hewlett-Packard Company            - 4 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+      The ----bbbb option allows old makefiles (those written for the old version
+      of mmmmaaaakkkkeeee) to run without errors.  The old version of mmmmaaaakkkkeeee assumed that
+      if a target did not have any explicit commands associated with it, the
+      user intended the command to be null, and would not execute any
+      ....DDDDEEEEFFFFAAAAUUUULLLLTTTT rule that might have been defined.  The current version of
+      mmmmaaaakkkkeeee operates in this mode by default.  However, the current version
+      of mmmmaaaakkkkeeee provides a ----BBBB option which turns this mode off so that if a
+      target does not have explicit commands associated with it and a
+      ....DDDDEEEEFFFFAAAAUUUULLLLTTTT rule is defined, the ....DDDDEEEEFFFFAAAAUUUULLLLTTTT rule is executed.  Note that
+      the ----bbbb and ----BBBB options have no effect on the search and possible
+      location and execution of an appropriate inference rule for the
+      target.  The search for a built-in inference rule other than ....DDDDEEEEFFFFAAAAUUUULLLLTTTT
+      is always performed.
+
+      The signals SSSSIIIIGGGGIIIINNNNTTTT, SSSSIIIIGGGGQQQQUUUUIIIITTTT, SSSSIIIIGGGGHHHHUUUUPPPP, and SSSSIIIIGGGGTTTTEEEERRRRMMMM (see _s_i_g_n_a_l(5)) cause
+      the target to be deleted unless the target depends on the special name
+      ....PPPPRRRREEEECCCCIIIIOOOOUUUUSSSS.
+
+    OOOOppppttttiiiioooonnnnssss
+      The following is a brief description of all options and some special
+      names.  Options can occur in any order.  They can be specified
+      separately, or together with one ----, except for the ----ffff option.
+
+      ----bbbb             Compatibility mode for old (Version 7) makefiles.  This
+                     option is turned on by default.
+
+      ----BBBB             Turn off compatibility mode for old (Version 7)
+                     makefiles.
+
+      ----dddd             Debug mode.  Print out detailed information on files
+                     and times examined.  (This is very verbose and is
+                     intended for debugging the mmmmaaaakkkkeeee command itself.)
+
+      ----eeee             Environment variables override assignments within
+                     makefiles .
+
+      ----ffff  _m_a_k_e_f_i_l_e   Description file name, referred to as the makefile.  A
+                     file name of ---- denotes the standard input.  The
+                     contents of the makefile override the built-in rules
+                     and macros if they are present.  Note that the space
+                     between ----ffff and _m_a_k_e_f_i_l_e mmmmuuuusssstttt be present.  Multiple
+                     instances of this option are allowable (except for ----ffff
+                     ----), and are processed in the order specified.
+
+      ----iiii             Ignore error codes returned by invoked commands.  This
+                     mode is also entered if the special target name ....IIIIGGGGNNNNOOOORRRREEEE
+                     appears in the makefile.
+
+      ----kkkk             When a command returns nonzero status, abandon work on
+                     the current entry, but continue on other branches that
+                     do not depend on that target.  This is the opposite of
+
+
+
+ Hewlett-Packard Company            - 5 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+                     ----SSSS.  If both ----kkkk and ----SSSS are specified, the last one
+                     specified is used.
+
+      ----nnnn             No execute mode.  Print commands, but do not execute
+                     them.  Even lines beginning with an @@@@ are printed.
+                     However, lines that contain the string $$$$((((MMMMAAAAKKKKEEEE)))) or
+                     $$$${{{{MMMMAAAAKKKKEEEE}}}} or that have ++++ as a prefix to the command are
+                     executed.
+
+      ----pppp             Write to standard output the complete set of macro
+                     definitions and target descriptions.
+
+      ----PPPP             Update in parallel more than one target at a time.  The
+                     number of targets updated concurrently is determined by
+                     the environment variable PPPPAAAARRRRAAAALLLLLLLLEEEELLLL and the presence of
+                     ....MMMMUUUUTTTTEEEEXXXX directives in make file.
+
+      ----qqqq             Question.  The mmmmaaaakkkkeeee command returns a zero or nonzero
+                     status code, depending on whether the target file is or
+                     is not up-to-date.  Targets are not updated with this
+                     option.
+
+      ----rrrr             Clear suffix list and do not use the built-in rules.
+
+      ----ssss             Silent mode.  Command lines are not printed to standard
+                     output before their execution.  This mode is also
+                     entered if the special target name ....SSSSIIIILLLLEEEENNNNTTTT appears in
+                     the makefile.
+
+      ----SSSS             Terminate if an error occurs while executing the
+                     commands to bring a target up-to-date.  This is the
+                     default and the opposite of ----kkkk.  If both ----kkkk and ----SSSS are
+                     specified, the last one given is used.  This enables
+                     overriding the presence of the kkkk flag in the MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS
+                     environment variable.
+
+      ----tttt             Touch the target files (causing them to be up-to-date)
+                     rather than issue the usual commands.
+
+      ----uuuu             Unconditionally mmmmaaaakkkkeeee the target, ignoring all
+                     timestamps.
+
+      ----wwww             Suppress warning messages.  Fatal messages will not be
+                     affected.
+
+      [_m_a_c_r_o__n_a_m_e====_v_a_l_u_e]
+                     Zero or more command line macro definitions can be
+                     specified.  See the _M_a_c_r_o_s subsection.
+
+      [_n_a_m_e_s]        Zero or more target names that appear in the makefile.
+                     Each target so specified is updated by mmmmaaaakkkkeeee.  If no
+
+
+
+ Hewlett-Packard Company            - 6 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+                     names are specified, mmmmaaaakkkkeeee updates the first target in
+                     the makefile that is not an inference rule.
+
+    PPPPaaaarrrraaaalllllllleeeellll MMMMaaaakkkkeeee
+      If mmmmaaaakkkkeeee is invoked with the ----PPPP option, it tries to build more than one
+      target at a time, in parallel.  (This is done by using the standard
+      UNIX system process mechanism which enables multiple processes to run
+      simultaneously.)  For the makefile shown in the example in the
+      previous subsection, it would create processes to build aaaa....oooo and bbbb....oooo in
+      parallel.  After these processes were complete, it would build ppppggggmmmm.
+
+      The number of targets mmmmaaaakkkkeeee will try to build in parallel is determined
+      by the value of the environment variable PPPPAAAARRRRAAAALLLLLLLLEEEELLLL.  If ----PPPP is invoked,
+      but PPPPAAAARRRRAAAALLLLLLLLEEEELLLL is not set, then mmmmaaaakkkkeeee will try to build no more than two
+      targets in parallel.
+
+      You can use the ....MMMMUUUUTTTTEEEEXXXX directive to serialize the updating of some
+      specified targets.  This is useful when two or more targets modify a
+      common output file, such as when inserting modules into an archive or
+      when creating an intermediate file with the same name, as is done by
+      lllleeeexxxx and yyyyaaaacccccccc.  If the makefile in the previous subsection contained a
+      ....MMMMUUUUTTTTEEEEXXXX directive of the form
+
+           ....MMMMUUUUTTTTEEEEXXXX:::: aaaa....oooo bbbb....oooo
+
+      it would prevent make from building a.o and b.o in parallel.
+
+    EEEEnnnnvvvviiiirrrroooonnnnmmmmeeeennnntttt
+      All variables defined in the environment (see _e_n_v_i_r_o_n(5)) are read by
+      mmmmaaaakkkkeeee and are treated and processed as macro definitions, with the
+      exception of the SSSSHHHHEEEELLLLLLLL environment variable which is always ignored.
+      The value of the SSSSHHHHEEEELLLLLLLL environment variable will not be used as a
+      macro and will not be modified by defining the SSSSHHHHEEEELLLLLLLL macro in a
+      makefile or on the command line.  Variables with no definition or
+      empty string definitions are included by mmmmaaaakkkkeeee.
+
+      There are four possible sources of macro definitions which are read in
+      the following order: internal (default), current environment, the
+      makefile(s), and command line.  Because of this order of processing,
+      macro assignments in a makefile override environment variables.  The
+      ----eeee option allows the environment to override the macro assignments in
+      a makefile.  Command-line macro definitions always override any other
+      definitions.
+
+      The MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable is processed by mmmmaaaakkkkeeee on the
+      assumption that it contains any legal input option (except ----ffff, ----pppp, and
+      ----dddd) defined for the command line.  The MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS variable can also be
+      specified in the makefile.
+
+      (UNIX Standard only, see _s_t_a_n_d_a_r_d_s(5).  MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS in the makefile
+      replaces the MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable.  Command line options
+
+
+
+ Hewlett-Packard Company            - 7 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+      have precedence over MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS environment variable.)
+
+      If MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS is not defined in either of these places, mmmmaaaakkkkeeee constructs
+      the variable for itself, puts the options specified on the command
+      line and any default options into it, and passes it on to invocations
+      of commands.  Thus, MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS always contains the current input
+      options.  This proves very useful for doing recursive mmmmaaaakkkkeeee commands.
+      Even when the ----nnnn option is specified, command lines containing the
+      string $$$$((((MMMMAAAAKKKKEEEE)))) or $$$${{{{MMMMAAAAKKKKEEEE}}}} are executed; hence, one can perform a mmmmaaaakkkkeeee
+      ----nnnn recursively on an entire software system to see what would have
+      been executed.  This is possible because the ----nnnn is put into MMMMAAAAKKKKEEEEFFFFLLLLAAAAGGGGSSSS
+      and passed to the recursive invocations of $$$$((((MMMMAAAAKKKKEEEE)))) or $$$${{{{MMMMAAAAKKKKEEEE}}}}.  This
+      is one way of debugging all of the makefiles for a software project
+      without actually executing any of the commands.
+
+      Each of the commands in the rules is given to a shell to be executed.
+      The shell used is the shell command interpreter (see _s_h(1)), or the
+      one specified in the makefile by the SSSSHHHHEEEELLLLLLLL macro.  To ensure the same
+      shell is used each time a makefile is executed, the line:
+
+           SSSSHHHHEEEELLLLLLLL====////uuuussssrrrr////bbbbiiiinnnn////sssshhhh
+
+      or a suitable equivalent should be put in the macro definition section
+      of the makefile.
+
+    SSSSuuuuffffffffiiiixxxxeeeessss
+      Target and/or dependent names often have suffixes.  Knowledge about
+      certain suffixes is built into mmmmaaaakkkkeeee and used to identify appropriate
+      inference rules to be applied to update a target (see the subsection
+      on _I_n_f_e_r_e_n_c_e _R_u_l_e_s).  The current default list of suffixes is:
+
+           ....oooo ....cccc ....cccc~~~~ ....CCCC ....CCCC~~~~ ....ccccxxxxxxxx ....ccccxxxxxxxx~~~~ ....ccccpppppppp ....ccccpppppppp~~~~ ....cccccccc ....cccccccc~~~~
+           ....yyyy ....yyyy~~~~ ....llll ....llll~~~~ ....LLLL ....LLLL~~~~ ....YYYY ....YYYY~~~~ ....ssss ....ssss~~~~ ....sssshhhh ....sssshhhh~~~~
+           ....hhhh ....hhhh~~~~ ....HHHH ....HHHH~~~~  ....pppp ....pppp~~~~ ....ffff ....ffff~~~~ ....rrrr ....rrrr~~~~
+
+      These suffixes are defined as the dependents of the special built-in
+      target ....SSSSUUUUFFFFFFFFIIIIXXXXEEEESSSS.  This is done automatically by mmmmaaaakkkkeeee.
+
+      Additional suffixes can be specified in a makefile as the dependents
+      list for ....SSSSUUUUFFFFFFFFIIIIXXXXEEEESSSS.  These additional values are added to the default
+      values.  Multiple suffix lists accumulate.  The order of the suffix
+      list is significant (see the _I_n_f_e_r_e_n_c_e _R_u_l_e_s subsection).  If the user
+      wishes to change the order of the suffixes, he must first define
+      ....SSSSUUUUFFFFFFFFIIIIXXXXEEEESSSS with a null dependent list, which clears the current value
+      for ....SSSSUUUUFFFFFFFFIIIIXXXXEEEESSSS, and then define ....SSSSUUUUFFFFFFFFIIIIXXXXEEEESSSS with the suffixes in the
+      desired order.  The list of suffixes built into mmmmaaaakkkkeeee on any machine
+      can be displayed by:
+
+           mmmmaaaakkkkeeee ----ffffpppp ---- 2222>>>>////ddddeeeevvvv////nnnnuuuullllllll <<<<////ddddeeeevvvv////nnnnuuuullllllll
+
+
+
+
+
+ Hewlett-Packard Company            - 8 -       HP-UX 11i Version 3 Feb 2007
+
+
+
+
+
+
+ mmmmaaaakkkkeeee((((1111))))                                                             mmmmaaaakkkkeeee((((1111))))
+
+
+
+
+      The list of built-in suffixes incorporated with the definitions in a
+      given makefile called mmmmyyyymmmmaaaakkkkeeeeffffiiiilllleeee can be displayed by:
+
+           mmmmaaaakkkkeeee ----ffffpppp mmmmyyyymmmmaaaakkkkeeeeffffiiiilllleeee 2222>>>>////ddddeeeevvvv////nnnnuuuullllllll <<<<////ddddeeeevvvv////nnnnuuuullllllll
+
+    IIIInnnnffffeeeerrrreeeennnncccceeee RRRRuuuulllleeeessss
+      Certain target or dependent names (such as those ending with ....oooo) have
+      inferable dependents such as ....cccc and ....ssss, etc.  If no update commands
+      for such a name appear in the makefile, and if an inferable dependent
+      file exists, that dependent file is compiled to update the target.  In
+      this case, mmmmaaaakkkkeeee has inference rules that allow building files from
+      other files by examining the suffixes and determining an appropriate
+      inference rule to use.  There are currently default inference rules
+      defined for:
+
+      Single Suffix Rules
+
+                    ....cccc ....cccc~~~~
+                    ....CCCC ....CCCC~~~~ ....ccccxxxxxxxx ....ccccxxxxxxxx~~~~ ....ccccpppppppp ....ccccpppppppp~~~~ ....cccccccc ....cccccccc~~~~
+                    ....sssshhhh ....sssshhhh~~~~
+      

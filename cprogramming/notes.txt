@@ -1,0 +1,1 @@
+find -name '*.txt'  | while read file_name; do iconv -f gbk -t utf8 $file_name -o $file_name ; done

@@ -1,0 +1,59 @@
+case $APP_BIT in
+	64)
+		AR="ar -X64 r";;
+	*)
+		AR="ar r";;
+esac
+
+
+PLATFORM=`uname -s`
+case $PLATFORM in
+	HP-UX)	#HP
+		cc="cc"
+		CC="aCC +DS2.0 +DAportable -AA -D_RWSTD_MULTI_THREAD "
+		SOCKLIB="-lpthread"
+		AR="ar r";;
+	AIX)	#IBM
+		cc="xlc"
+		CC="xlC -qcpluscmt"
+		SOCKLIB="-lxnet -lc -lpthread";;
+	SunOS)	#SUN
+		cc="cc"
+		CC="CC"
+		SOCKLIB="-lxnet -lc -lpthread";;
+	OSF1)	#COMPAQ
+		cc="cc"
+		CC="cxx"
+		SOCKLIB="-lpthread";;
+	Linux)	#LINUX
+		cc="gcc"
+		CC="g++"
+		SOCKLIB="-lpthread";;
+CYGWIN_NT-5.0)	#CYGWIN
+		cc="gcc"
+		CC="g++"
+		SOCKLIB="-lpthread";;
+	*)	echo Platform not support yet.
+		exit 1
+esac
+
+case $APP_BIT in
+	64)
+  	case $PLATFORM in
+  	  HP-UX)	#HP
+        CC=$CC" +DD64";;
+  	  *)
+		    CC=$CC" -q64";;
+    esac;;
+	*)
+		CC=$CC;;
+esac
+
+case $1 in
+	CC)	echo $CC;;
+	cc)	echo $cc;;
+	SOCKLIB) echo $SOCKLIB;;
+	AR)	echo $AR;;
+	*)	echo "";;
+esac
+

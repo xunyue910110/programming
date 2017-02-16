@@ -1,0 +1,2 @@
+STDMAKE_ROOT    = ${BUDE_HOME}/stdmake
+include $(STDMAKE_ROOT)/stdenv$(APP_BIT)

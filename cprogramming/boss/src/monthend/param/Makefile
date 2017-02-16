@@ -1,0 +1,104 @@
+################################################################################
+## 包含BUDE基础开发环境MAKEFILE全局变量
+################################################################################
+include $(BUDE_HOME)/stdmake/stdenv
+
+
+################################################################################
+## 子目录make的编译，请输入子目录名
+################################################################################
+SUBDIRS          =
+AFTER_SUMMIT     =
+
+
+################################################################################
+## 编译相关的文件定义
+################################################################################
+# 所有的源文件,用空格分隔,用\换行
+SRCS = PM_MonthAccount.cpp\
+       PO_SysParamInfo.cpp\
+       PO_DetailItem.cpp PO_FreeInfoDef.cpp
+      
+
+# 要提交到$(DESTINC)的头文件,用空格分隔,用\换行
+# 由于在cpp文件中已经include相关的头文件了,故这里只需要
+# 定义要提交的头文件
+# SUBMIT_HDRS	=  PM_MonthAccount.h
+
+# 生成的目标程序
+PROGRAM       =
+
+# 生成的目标静态库
+STATIC_LIBRARY = libparammanage.a
+
+# 生成的目标动态库
+SHARE_LIBRARY =
+
+
+################################################################################
+## 提交目录的定义，可以为空
+################################################################################
+# 提交时, 可执行文件所要拷贝的目录
+DEST    = $(WORK_HOME)/bin
+
+# 提交时, 库文件所要拷贝的目录
+DESTLIB = ../lib
+
+# 提交时, 头文件所要拷贝的目录
+DESTINC	=
+
+# 提交时, 源代码所要拷贝的目录
+DESTSRC	=
+
+# 提交时, 文档所要拷贝的目录
+DESTDOC = $(WORK_HOME)/doc/param
+
+
+################################################################################
+## 编译相关的参数定义
+################################################################################
+# 编译时需要的BUDE基础开发环境组件库名
+BUDE_LIB      = -lapp -lbill -ldbparam -lbase -loradbi -llog4cpp
+
+# 应用本身的头目录
+THE_INCLUDE      = -I${HOME}/anta64b/syscomp/src -I${HOME}/account/include -I$(WORK_HOME)/include -I$(WORK_HOME)/include/mdb -I$(WORK_HOME)/include/mdb_param -I${ALTIBASE_HOME}/include -I../include 
+
+# 应用本身的库目录
+THE_LIBPATH      =
+
+# 应用本身的库名
+THE_LIB          =
+
+# 内部已经包含平台的头目录,这里指定编译需要额外的参数
+# 编译时,可以选择的参数:
+# 动态库文件     $(SHARE_CXX_FLAGS)
+# ORACLE数据库   $(ORA_INCLUDE)
+# SYBASE数据库   $(SYB_INCLUDE)
+# 举例:
+# CXXFLAGS = $(APP_INCLUDE) $(STDMAKE_INCLUDE) $(SYSCOMP_INCLUDE) $(ORA_INCLUDE)
+CXXFLAGS = $(SYSCOMP_INCLUDE) $(ORA_INCLUDE) $(THE_INCLUDE) -DDEBUG -D__PROV${PROV_CODE}__
+
+# 内部已经包含平台的库目录,这里指定连接时需要额外的参数
+# 编译时,可以选择的参数:
+# ORACLE数据库   $(ORA_LIBPATH)
+# SYBASE数据库   $(SYB_LIBPATH)
+# 举例:
+# LDFLAGS = $(ORA_LIBPATH) $(SYB_LIBPATH)
+LDFLAGS	= $(ORA_LIBPATH) $(THE_LIBPATH)
+
+# 指定需要的库名
+# 编译时,可以选择的参数:
+# ORACLE数据库   $(ORA_LIB)
+# SYBASE数据库   $(SYB_LIB)
+# 举例:
+# LDLIB  = $(THE_LIB) $(BUDE_LIB) $(ORA_LIB) \
+#          -lnsl -lsocket -lclntsh -lclntst9 -lm
+LDLIB   = $(THE_LIB)
+
+
+################################################################################
+## 编译的makefile定义，不要修改
+################################################################################
+# 包含预定义的 makefile
+include $(BUDE_HOME)/stdmake/stdmk
+

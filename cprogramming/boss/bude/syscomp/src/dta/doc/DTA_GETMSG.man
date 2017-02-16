@@ -1,0 +1,104 @@
+.TH DTA_GETMSG 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_GETMSG() - Get message from a queue.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_GETMSG(DTAHQUEUE *hqueue,char *message,long *msglen,long *priority,int mode);
+
+.SH PARAMETERS
+.TP 15
+hqueue       -
+Handle of queue.
+.TP
+message      -
+Point to message data.
+.TP
+msglen       -
+Length of message data.
+.TP
+priority     -
+Priority of message.
+.TP
+mode         -
+Mode of GETMSG.
+.RS 5
+.TP 25
+DTAGMO_READBYORDER
+Read message sort by time.
+.TP
+DTAGMO_READBYPRIORITY
+Read message sort by priority.
+.TP
+DTAGMO_SKIPWHILEREAD
+Move cursor to the next message after read.
+.TP
+DTAGMO_DELETEAFTERREAD
+Delete message after read.
+.TP
+DTAGMO_RESETCURSOR
+Reset cursor to the first message.
+.TP
+DTAGMO_JUSTINQUIRE
+Get the length and priority of message but message data.
+
+.SH DESCRIPTION
+DTA_GETMSG() put message into a queue openned by DTA_OPENQ().
+To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_FILESEEK_ERROR
+fseek() failed.
+.TP
+.ER DTARC_FILEREAD_ERROR
+fread() failed.
+.TP
+.ER DTARC_QUEUE_EMPTY
+There is no messages in the queue.
+.TP
+.ER DTARC_MEMORYALLOC_ERROR
+Memory alloc failed.
+.TP
+.ER DTARC_QUEUE_END
+Cursor reach the end of queue.
+.TP
+.ER DTARC_INTERNAL_ERROR
+Internal call failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHQUEUE hqueue;
+
+char message[200];
+
+long msglen;
+
+long priority;
+
+DTA_OPENQ(&hqueue,"myqueue1");
+
+DTA_GETMSG(&hqueue,message,&msglen,&priority, DTAGMO_READBYPRIORITY);
+
+printf("message: %s\\nlength: %ld\\npriority: %ld\\n", message,msglen,priority);
+
+DTA_CLOSEQ(hqueue);
+
+.SH SEE ALS3
+DTA_PUTMSG(3)
+
+
+

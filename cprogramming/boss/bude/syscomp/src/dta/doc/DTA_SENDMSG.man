@@ -1,0 +1,67 @@
+.TH DTA_SENDMSG 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_SENDMSG() - Send message to remote queue.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_SENDMSG(DTAHCONN hconn,const char *remotequeue,
+const char *message,long msglen,long priority);
+
+.SH PARAMETERS
+.TP 15
+hconn        -
+Handle of connection.
+.TP
+remotequeue  -
+Name of remote queue.
+.TP
+message      -
+Point to message data.
+.TP
+msglen       -
+Length of message data.
+.TP
+priority     -
+Priority of message.
+
+.SH DESCRIPTION
+DTA_SENDMSG() send message to a queue in remote host through
+the connection established by DTA_CONN().
+To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_SOCKETWRITE_ERROR
+Socket write failed.
+.TP
+.ER DTARC_SOCKETREAD_ERROR
+Socket read failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHCONN hconn;
+
+DTA_CONN(&hconn,"192.22.33.44");
+
+DTA_SENDMSG(hconn,"myqueue2","hello remote queue!",20,1);
+
+DTA_DISC(hconn);
+
+.SH SEE ALSO
+
+
+
+

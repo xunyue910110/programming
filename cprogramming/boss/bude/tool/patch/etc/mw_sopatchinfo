@@ -1,0 +1,26 @@
+
+!unpatch 1.2
+#unpatching by gboss@lianchuang.com at 2005-08-24 20:19:01
+#
+#!unpatch 1.3
+##unpatching by gboss@lianchuang.com at 2005-08-24 20:18:54
+##
+##!patch 1.4
+###patching by gboss@lianchuang.com at 2005-08-24 20:18:48
+##cslib=1.4
+##sample=1.4
+##
+##
+#!patch 1.3
+##patching by gboss@lianchuang.com at 2005-08-24 20:18:40
+#cslib=1.3
+#sample=1.3
+#
+#
+!patch 1.2
+#patching by gboss@lianchuang.com at 2005-08-24 20:18:32
+cslib=1.2
+sample=1.2
+
+
+

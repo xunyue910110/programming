@@ -1,0 +1,51 @@
+################################################################################
+include $(BUDE_HOME)/stdmake/stdenv
+
+WORK_HOME = /billing/
+
+################################################################################
+SUBDIRS          = 
+AFTER_SUMMIT     = 
+
+################################################################################
+SRCS             = TestApp.cpp 
+                   
+
+SUBMIT_HDRS      = 
+
+#生成目标
+PROGRAM          = monitor
+STATIC_LIBRARY   = 
+SHARE_LIBRARY    = 
+
+#提交相关变量
+DEST    = $(WORK_HOME)/bin
+DESTLIB = ../lib
+DESTINC = $(WORK_HOME)/include/mdb
+DESTSRC =
+DESTDOC = 
+
+################################################################################
+THE_INCLUDE      = -I./  \
+                   -I../ \
+                   -I$(WORK_HOME)/include \
+                   -I../common \
+                   -I../semaphore
+
+THE_LIBPATH      = -L./  \
+                   -L$(WORK_HOME)/lib \
+                   -L$(WORK_HOME)/lib/mdb \
+                   -L$(ALTIBASE_HOME)/lib
+
+THE_LIB          = -lapp -llog4cpp -lbase  -lpthread 
+
+################################################################################
+CXXFLAGS = ${THE_INCLUDE} ${ORA_INCLUDE} -DFP_DEBUG  
+#-D_USEDSLOT_LIST_ 
+CCFLAGS  = ${THE_INCLUDE} ${ORA_INCLUDE}
+LDFLAGS  = ${THE_LIBPATH} 
+LDLIB    = ${THE_LIB} -lmdb -lodbccli  
+#-bbigtoc
+
+################################################################################
+include $(BUDE_HOME)/stdmake/stdmk

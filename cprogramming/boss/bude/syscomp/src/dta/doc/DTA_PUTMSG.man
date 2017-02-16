@@ -1,0 +1,75 @@
+.TH DTA_PUTMSG 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_PUTMSG() - Put message into a queue.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_PUTMSG(DTAHQUEUE hqueue,const char *message,long msglen,long priority);
+
+.SH PARAMETERS
+.TP 15
+hqueue       -
+Handle of queue.
+.TP
+message      -
+Point to message data.
+.TP
+msglen       -
+Length of message data.
+.TP
+priority     -
+Priority of message.
+
+.SH DESCRIPTION
+DTA_PUTMSG() put message into a queue openned by DTA_OPENQ().
+To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_FILESEEK_ERROR
+fseek() failed.
+.TP
+.ER DTARC_FILEREAD_ERROR
+fread() failed.
+.TP
+.ER DTARC_QUEUE_FULL
+messages number in queue reach the MAXMSGS of queue,
+so that can not put any message into queue.
+.TP
+.ER DTARC_MEMORYALLOC_ERROR
+Memory alloc failed.
+.TP
+.ER DTARC_FILEWRITE_ERROR
+fwrite() failed.
+.TP
+.ER DTARC_FILEFLUSH_ERROR
+fflush() failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHQUEUE hqueue;
+
+DTA_OPENQ(&hqueue,"myqueue1");
+
+DTA_PUTMSG(hqueue,"hello queue1!",20,0);
+
+DTA_CLOSEQ(hqueue);
+
+.SH SEE ALSO
+DTA_GETMSG(3)
+
+
+

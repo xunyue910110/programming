@@ -1,0 +1,24 @@
+#This is ini-file for cparam component.
+#export CPARAM_CFG=/datainst/home/sdbude/syscomp/src/zcomptest/cparam.ini;
+
+#预创建之共享内存、信号量的key值
+IPC_KEY=992233
+#预创建之共享内存大小, 大于IPC_PAR_HEAD+IPC_PAR_IND+IPC_PAR_REC+IPC_PAR_EXT+2M
+IPC_SHMSIZE=419430400
+#锁数量
+IPC_LCKCNT=300
+
+#参数组件在共享内存中的偏移量
+IPC_SHMBASE=0
+
+#参数组件头信息大小
+IPC_PAR_HEAD=2048
+#参数组件索引数据大小
+IPC_PAR_IND=512000
+#参数组件记录数据大小
+IPC_PAR_REC=104857600
+#参数组件记录数据大小（刷新），如果启用刷新机制则必须等于IPC_PAR_REC
+IPC_PAR_RECX=104857600
+#参数组件扩展数据大小, 如果启用刷新机制，则必须大于等于IPC_PAR_REC
+IPC_PAR_EXT=104857600
+

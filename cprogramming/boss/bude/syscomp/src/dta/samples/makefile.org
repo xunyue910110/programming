@@ -1,0 +1,85 @@
+CC = `getenv CC`
+#CCFLAGS = -D_POSIX_C_SOURCE=199506L
+INCLUDE = -I.
+LIB = -L. -L../lib
+OTHERLIB = -lc -lpthread
+DTALIB = -lft -lmt -ldta
+
+all: dtalib ft mt dtaserver dtaqm createq \
+	deleteq emptyq readq writeq putf getf mgetf readq2 \
+	writeq2 putf2 getf2 lcsplit clean
+dtalib: dtalib.c dtacommon.h dta.h
+	$(CC) $(INCLUDE) $(LIB) -c dtalib.c $(OTHERLIB)
+	ar r libdta.a dtalib.o
+ft: ft.h ft.cpp
+	$(CC) $(INCLUDE) $(LIB) -c ft.cpp
+	ar r libft.a ft.o
+mt: mt.h mt.cpp
+	$(CC) $(INCLUDE) $(LIB) -c mt.cpp
+	ar r libmt.a mt.o
+dtaserver: dtaserver.c dtacommon.h dta.h
+	$(CC) $(INCLUDE) $(LIB) -o dtaserver dtaserver.c $(DTALIB) $(OTHERLIB)
+dtaqm: dtaqm.c dtacommon.h dta.h
+	$(CC) $(INCLUDE) $(LIB) -o dtaqm dtaqm.c $(DTALIB) $(OTHERLIB)
+createq: createq.c dtacommon.h dta.h
+	$(CC) $(INCLUDE) $(LIB) -o createq createq.c $(DTALIB) $(OTHERLIB)
+deleteq: deleteq.c dtacommon.h dta.h
+	$(CC) -o deleteq deleteq.c
+emptyq: emptyq.c dta.h
+	$(CC) $(INCLUDE) $(LIB) -o emptyq emptyq.c $(DTALIB) $(OTHERLIB)
+readq: readq.c dta.h
+	$(CC) $(INCLUDE) $(LIB) -o readq readq.c $(DTALIB) $(OTHERLIB)
+writeq: writeq.c dta.h
+	$(CC) $(INCLUDE) $(LIB) -o writeq writeq.c $(DTALIB) $(OTHERLIB)
+putf: putf.c dta.h
+	$(CC) $(INCLUDE) $(LIB) -o putf putf.c $(DTALIB) $(OTHERLIB)
+getf: getf.c dta.h
+	$(CC) $(INCLUDE) $(LIB) -o getf getf.c $(DTALIB) $(OTHERLIB)
+mgetf: mgetf.c dta.h libdta.a
+	$(CC) $(INCLUDE) $(LIB) -o mgetf mgetf.c $(DTALIB) $(OTHERLIB)
+readq2: readq.cpp
+	$(CC) $(INCLUDE) $(LIB) -o readq2 readq.cpp $(DTALIB)
+writeq2: writeq.cpp
+	$(CC) $(INCLUDE) $(LIB) -o writeq2 writeq.cpp $(DTALIB)
+putf2: putf.cpp
+	$(CC) $(INCLUDE) $(LIB) -o putf2 putf.cpp $(DTALIB)
+getf2: getf.cpp
+	$(CC) $(INCLUDE) $(LIB) -o getf2 getf.cpp $(DTALIB)
+lcsplit: lcsplit.c
+	$(CC) -o lcsplit lcsplit.c
+
+clean:
+	rm *.o
+
+submit:
+	cp dtacommon.h ../include
+	cp dta.h ../include
+	cp ft.h ../include
+	cp mt.h ../include
+	mv libdta.a ../lib
+	mv libft.a ../lib
+	mv libmt.a ../lib
+	mv dtaserver ../bin
+	mv dtaqm ../bin
+	mv createq ../bin
+	mv deleteq ../bin
+	mv emptyq ../bin
+	mv readq ../bin
+	mv writeq ../bin
+	mv putf ../bin
+	mv getf ../bin
+	mv mgetf ../bin
+	mv lcsplit ../bin
+	cp startdta ../bin
+	cp stopdta ../bin
+	cp readq.c ../samples
+	cp writeq.c ../samples
+	cp putf.c ../samples
+	cp getf.c ../samples
+	cp mgetf.c ../samples
+	cp readq.cpp ../samples
+	cp writeq.cpp ../samples
+	cp putf.cpp ../samples
+	cp getf.cpp ../samples
+
+

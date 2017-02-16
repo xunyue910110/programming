@@ -1,0 +1,1 @@
+include $(PWD)/makefile$(APP_BIT)

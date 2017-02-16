@@ -1,0 +1,1 @@
+include $(STDMAKE_ROOT)/stdmk.hp$(APP_BIT)

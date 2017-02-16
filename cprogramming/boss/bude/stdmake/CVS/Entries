@@ -1,0 +1,26 @@
+/Makefile.template/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/make.txt/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/os.guess/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdcp.sh/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stddoc.sh/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdenv/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdenv32/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdenv64/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.dec/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.hp/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.hp32/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.hp64/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.hp64.081201/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.ibm/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.ibm32/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.ibm64/1.2/Wed Apr 20 04:46:41 2011/-kkv/TV42_FB_20110510
+/stdmk.lnx/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.sun/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.sun32/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.sun64/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdmk.tag/1.1/Fri Apr 15 07:35:53 2011/-kkv/TV42_FB_20110510
+/stdrm.sh/1.1/Fri Apr 15 07:35:54 2011/-kkv/TV42_FB_20110510
+/stdshell.sh/1.1/Fri Apr 15 07:35:54 2011/-kkv/TV42_FB_20110510
+/stdsub.sh/1.1/Fri Apr 15 07:35:54 2011/-kkv/TV42_FB_20110510
+D

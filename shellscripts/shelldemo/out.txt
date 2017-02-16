@@ -1,0 +1,3 @@
+3
+2
+cat: 1.txt: Permission denied

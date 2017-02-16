@@ -1,0 +1,11 @@
+#!/bin/sh	
+nProcessCount=`ps -ef | grep $1 | grep -v grep |wc -l`
+echo $nProcessCount
+if [ $nProcessCount -eq 2 ]
+then
+    echo already startup!
+    exit 1;
+else
+    echo starup now !
+    exec ./fl $1
+fi

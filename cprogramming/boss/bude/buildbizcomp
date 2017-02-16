@@ -1,0 +1,32 @@
+#login as antaeus user
+
+echo `echo "begin time" : ;date`
+
+cd $HOME/bizcomp/src
+
+cd backupdatetask
+make all submit
+cd ..
+
+cd sysorg
+make all submit
+cd ..
+
+cd syssec
+make all submit
+cd ..
+
+cd sysupdate
+make all submit
+cd ..
+
+cd sysweb
+make all submit
+cd ..
+
+cd
+find $HOME/bizcomp -name '_debug' -exec rm -rf {} \;
+find $HOME/bizcomp -name '_release' -exec rm -rf {} \;
+
+echo `echo "end time" : ;date`
+

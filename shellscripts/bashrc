@@ -1,0 +1,51 @@
+set -o vi
+ulimit -c unlimited
+
+export JAVA_HOME=/usr/java/jdk1.6.0_45
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export DISPLAY=192.168.56.1:0
+export PATH=.:$PATH
+#export C_INCLUDE_PATH=/usr/src/linux/linux-2.6.32.67/include:/usr/src/linux/linux-2.6.32.67/arch/x86/include:/usr/src/linux/linux-2.6.32.67/tools/perf/util/include:/usr/src/linux/linux-2.6.32.67/security/selinux/include:/usr/src/linux/linux-2.6.32.67/drivers/scsi/bfa/include
+export C_INCLUDE_PATH=/usr/src/kernels/2.6.32-573.3.1.el6.x86_64/include:/usr/src/kernels/2.6.32-573.3.1.el6.x86_64/arch/x86/include:/usr/src/kernels/2.6.32-573.3.1.el6.x86_64/arch/cris/include
+alias CC='g++ -Wall -g -std=gnu++11'
+alias cc='gcc -Wall -g'
+alias g='g++ -Wall -g'
+
+PATH=$PATH:/usr/hla
+export PATH
+hlalib=/usr/hla/hlalib
+export hlalib
+hlainc=/usr/hla/include
+export hlainc
+export hlalinkopt="-m elf_i386"
+#export PS1="==========>>$ "
+export ORACLE_INCLUDE=/usr/include/oracle/11.2/client64
+export CPLUS_INCLUDE_PATH=${CPLUS_INCLUDE_PATH}:${ORACLE_INCLUDE}:/home/developer/build/release-install/include
+export LIBRARY_PATH=${LIBRARY_PATH}:/home/developer/build/release-install/lib
+export  ORACLE_HOME=/usr/lib/oracle/11.2/client64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ORACLE_HOME/lib
+export  PATH=$PATH:/sbin:/usr/sbin:$ORACLE_HOME/bin
+export GOROOT=/home/developer/go
+export PATH=$GOROOT/bin:$PATH
+export GOPATH=/home/developer/go/development
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.91-2.6.2.1.el7_1.x86_64
+export LD_LIBRARY_PATH=$LD_LIBRARYPATH:/usr/local/lib
+alias cc='g++ -Werror -std=c++11'
+
+alias gaa='git add .'
+alias gs='git status'
+#alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gl='git l'
+alias gc='git commit'
+
+alias l='ls -alrt'
+alias c='clear'
+alias r='ruby'
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export GOROOT=/usr/lib/golang
+export GOPATH=$HOME/go
+export GOBIN=$HOME/go/bin
+export PATH=$GOBIN:$PATH
+

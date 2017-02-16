@@ -1,0 +1,25 @@
+#IBM AIX  操作系统相关的编译命令定义
+
+#C++ 源文件编译命令
+CXX=xlC -brtl -q64 -qxcall -qcpluscmt -DAIX -DHAVE_SYS_INTTYPES_H -bmaxdata:12000000000 ${IBM_CFLAGS} ${IBM64_CFLAGS}
+CC=$(CXX)
+
+#C++ 连接命令
+LD=xlC -brtl -q64 -bhalt:5 -bmaxdata:12000000000
+
+#C++ 库生成命令
+AR=ar -X64 -r
+
+#C++ 编译时产生的临时目录，或文件。在make clean;或make clear时会删除
+CXXCACHE=
+CCCACHE= $(CXXCACHE) 
+
+#对C++源代码编译时必须要加上的选项
+SHARE_CXX_FLAGS= -qrtti=all -I/usr/include -I/usr/vacpp/include 
+SHARE_CC_FLAGS= $(SHARE_CXX_FLAGS)
+
+#生成共享动态库时必须要加上的选项。
+SHARE_LINK_FLAGS= -qmkshrobj -qrtti=all -G  
+SHARE_LD_FLAGS=  #-lpthread 
+SHARE_LIB_SUFFIX=so
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="GBK"  standalone="yes"?>
+<ProvBOSS>
+  <BIPCode>BIP5A001</BIPCode>
+  <BIPVer>0100</BIPVer>
+  <ActivityCode>T5000002</ActivityCode>
+  <ActionCode>0</ActionCode>  
+  <ProcID>1111</ProcID>
+  <TransIDO>222</TransIDO>
+  <TransIDH>3333</TransIDH>
+  <CutoffDay>20050222</CutoffDay>
+  <ProcessTime>20050225234233</ProcessTime>
+  <Response>
+      <RspType></RspType>
+      <RspCode></RspCode>
+      <RspDesc></RspDesc>
+  </Response>
+  <TestFlag>1</TestFlag>
+  <MsgSender>4711</MsgSender>
+  <MsgReceiver>2201</MsgReceiver>
+  <SvcConVer>0100</SvcConVer>
+  <!-- 充值卡批量操作进度通知  T5000002 -->
+  <SvcCont>
+  <![CDATA[
+        <?xml version="1.0" encoding="GBK" standalone="yes"?>
+        <BatchProgressUpdate>
+            <TransIDO>223607</TransIDO>
+            <TransIDH>6638023</TransIDH>
+            <PercentCompleted >21</PercentCompleted >
+            <StartCSN>34</StartCSN>
+            <EndCSN>89</EndCSN>
+        </BatchProgressUpdate>
+  ]]>
+  </SvcCont>
+  
+</ProvBOSS>

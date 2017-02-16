@@ -1,0 +1,4 @@
+aCC -L../lib -o lo looksem.c -ldta
+aCC -L../lib -o sendq sendq.c -ldta
+aCC -L../lib -o ppp ppp.c -ldta
+aCC -L../lib -o ggg ggg.c -ldta

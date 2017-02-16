@@ -1,0 +1,142 @@
+                      js16的编译过程
+                      
+                      
+一。首先编译GNU make，编译gmake的时候需要清空环境变量,否则会报错：
+可以采取以下的步骤：
+（1）cp .profile .profile.bak
+（2）清空文件，执行下面的命令：>.profile
+二。编译GUN make
+1。进入目录make-3.80 
+2。运行sh configure，其编译的日志放在config.log中，如果正常的话，这个日志的结尾是：
+
+  configure: exit 0
+  否则不是。
+  这个步骤产生了build.sh以及makefile（在这个makfile中调用了前面的build.sh）文件和配置文件用于下一步编译。
+
+3.执行命令：make (直接采用上面生成的makefile文件),编译的结果是生成了GUN make执行文件。
+下面是执行这个命令的输出情况：
+        make  all-recursive
+Making all in glob
+        cd .. && /bin/sh ./config.status glob/Makefile depfiles
+config.status: creating glob/Makefile
+config.status: executing depfiles commands
+Making all in config
+No suffix list.
+        cd .. && /bin/sh ./config.status config/Makefile 
+config.status: creating config/Makefile
+Making all in po
+Making all in doc
+        cd . && /bin/sh ./config.status Makefile depfiles
+config.status: creating Makefile
+config.status: executing depfiles commands
+        cc  -g   -o make  ar.o arscan.o commands.o  default.o dir.o expand.o file.o  function.o getopt.o getopt1.o  implicit.o job.o main.o misc.o  read.o remake.o remote-stub.o 
+
+ 注意：上面的命令是直接调用系统的make文件，而不是采用本地的（也就是不能用这样的命令：./make）
+
+4.执行make check,出现
+... No Failures :-)
+这样的提示说明上面的编译出来的文件只正确的。这是一个可选步骤。
+
+（Optionally, type `./make check' to run any self-tests that come with  the package.）
+
+三。将编译出来的 make 可执行程序拷贝到 js16 相关目录下面
+1。将备份的.profile恢复,并重新登陆
+cp .profile.bak .profile
+
+
+2。进入/js16/src/config，修改以对应平台及操作系统版本的文件（比如HP-UXB.11.31.mk，如果没有对应的文件，需要
+从其他文件copy过来）中的：
+
+ifdef NS_USE_NATIVE
+  CC  = cc +Z +DS2.0 +u4 +DD64  
+  其中+DD32表示32位的（默认），+DD64表示64位的
+  
+3。进入cd $HOME/js16/src/fdlibm
+（1）cp ../make-3.80/make .
+（2）./make -f Makefile.ref clean
+
+注意：一定要用本地的make程序，也就是需要用./make方式来执行，而不能用系统的make程序，以后
+的命令行也是这样。
+
+（4）./make -f Makefile.ref all
+（5）cd $HOME/js16/src/fdlibm，将下面头文件(*.h)，
+分别copy到syscomp/include/js16/目录下
+
+
+4.进入cd $HOME/js16/src
+（1）cp ../make-3.80/make .
+（2）./make -f Makefile.ref clean
+（3）./make -f Makefile.ref all
+（4）进入以对应平台及操作系统版本命名的目录（HP-UXB.11.31_DBG.OBJ），将下面新生成的动态库(libjs.sl 改名  libjs16.sl)和头文件(*.h)，
+分别COPY 到syscomp/lib 以及syscomp/js16/inlcude目录下
+（5）进入cd $HOME/js16/src，将下面头文件(*.h)，
+  COPY syscomp/js16/inlcude目录下
+
+
+5。如果在hp 平台出现下面的错误：
+aCC -AA -D_RWSTD_MULTI_THREAD -Wl,+s -Wl,+n -o libfileadapter.sl FileResource.o ShellTaskAdapter.o FileExistCheckerAdapter.o FileProcessorAdapter.o FileContentCheckerAdapter.o FileResourceRepositoryAdapter.o CDateTime.o MacroAdapter.o Util.o -b -L/gboss/antaeus/lang/lib -L../engine -L../util -L/gboss/antaeus/syscomp/lib -L. -L/gboss/antaeus/lang/lib -llog4cpp -ldataset -lfl -lfile -lftrans -lbase -ldta -ljs -ljshlp -lflutil
+/usr/ccs/bin/ld: DP relative code in file /gboss/antaeus/syscomp/lib/libdta.a(dtalib.o) - shared library must be position
+    independent.  Use +z or +Z to recompile.
+    
+    则需要在bude下的dta目录下的syscomp/src/dta/src,修改makefile32或者makefile64的中的编译选项：
+    在原来的基础上
+                    CC = `../getenv CC `
+    增加+z 或者+Z 编译选项。
+                   CC = `../getenv CC +Z`
+    
+    然后再编译并提交dta，然后再编译上面的libfileadapter文件   
+    
+AIX 编译步骤
+1 cd $HOME/js16/src/config/
+  修改 config/AIX5.3.mk 编译64位
+  CC = xlC -brtl -q64
+
+2 cd $HOME/js16/src/fdlibm/
+  修改 Makefile.ref  大概175行
+  $(AR) rv $@ $? 改成 $(AR) -X64 -r $@ $?
+
+  make -f Makefile.ref clean
+  make -f Makefile.ref all
+
+  fdlibm/AIX5.3_DBG.OBJ 编译成 libfdm.a
+
+3 cd $HOME/js16/src/
+  修改 rules.mk 大概 114行
+  $(AR) rv $@ $? 改成 $(AR) -X64 -r $@ $?
+  修改 Makefile.ref 大概 253行
+  DASH_R = -r  改成 DASH_R = -b64 -r
+
+  make -f Makefile.ref clean
+  make -f Makefile.ref all
+
+
+@songzj 2009-9-16 20:53:51
+修改 
+CC = xlC_r -q64 -brtl
+CCC = xlC_r
+CFLAGS += -qarch=com -qnoansialias -qinline+$(INLINES) -DXP_UNIX -DAIX -DAIXV3 -DSYSV -DAIX4_3 -DHAVE_LOCALTIME_R
+
+RANLIB = ranlib
+
+#.c.o:
+#	$(CC) -c -MD $*.d $(CFLAGS) $<
+ARCH := aix
+CPU_ARCH = rs6000
+GFX_ARCH = x
+INLINES = js_compare_and_swap:js_fast_lock1:js_fast_unlock1:js_lock_get_slot:js_lock_set_slot:js_lock_scope1
+
+#-lpthreads -lc_r
+
+MKSHLIB_BIN = /usr/vacpp/bin/makeC++SharedLib_r
+MKSHLIB = $(MKSHLIB_BIN) X64 -p 0 -G -berok -bM:UR
+
+ifdef JS_THREADSAFE
+XLDFLAGS += -ldl
+endif
+@songzj 2009-9-16 20:54:53 end
+
+
+
+    
+
+

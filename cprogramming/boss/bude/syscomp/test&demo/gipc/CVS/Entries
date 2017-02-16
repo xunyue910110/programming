@@ -1,0 +1,14 @@
+/Barrier.Chat.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/ExLock.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Makefile.ExLockFifo/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Makefile.Fifo/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Makefile.SemaFifo/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Makefile.ShLockFifo/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Makefile.ShmFifo/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Mutex.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Queue.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Semaphore.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/ShLock.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/SharedMemory.Fifo.cpp/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+/Test.h/1.1/Fri Apr 15 07:56:49 2011/-kkv/TV42_FB_20110510
+D

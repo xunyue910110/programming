@@ -1,0 +1,19 @@
+# Mensajes en espa駉l para GNU make.
+# Copyright (C) 1996, 2001 Free Software Foundation, Inc.
+# Max de Mendiz醔al <max@upn.mx>, 1996, 2001.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU make 3.79.1\n"
+"POT-Creation-Date: 2002-10-03 22:13-0400\n"
+"PO-Revision-Date: 2001-12-28 12:24+0100\n"
+"Last-Translator: Max de Mendiz醔al <max@upn.mx>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: ar.c:56
+#, c-format
+msgid "attempt to use unsupported feature: `%s'"
+msgstr "Se intent

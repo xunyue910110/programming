@@ -1,0 +1,5 @@
+# Mensagem do GNU make em Portugu阺 (Brasil)
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# F醔io Henrique F. Silva <fabiohfs@mail.com>, 2000.
+#
+# Caso voc

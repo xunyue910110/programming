@@ -1,0 +1,98 @@
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/x-pkcs7-signature"; micalg="sha1"; boundary="----C63F89010A5C4CCB2F9D9C2869D571F3"
+
+This is an S/MIME signed message
+
+------C63F89010A5C4CCB2F9D9C2869D571F3
+#include <cstdio>
+//include <iostream>
+void showvar(int var)
+{
+    for (int i = 0; i < 32; i++)
+    {
+        var & (0x01 << (31-i))   ?  printf("1")  : printf("0");
+        if ( (i+1) % 8 == 0) printf(" ");
+        //if ( (i+1) % 32 == 0) printf("\n");
+        //(var & (0x01 << (31-i)))   ?  std::cout << "1" : std::cout << "0";
+    }
+}
+
+void showvar2(int var)
+{
+  typedef unsigned char uc;
+  uc * p = (uc*)&var;
+  p = p + 3;
+  for (int w = 0; w < sizeof(var); w++, --p)
+  {
+    for (int i = 0; i < 8; i++)
+     *p & (0x01 << (7-i)) ? printf("1") : printf("0");
+    printf(" ");
+  }  
+  
+}
+//内存中真实数据， 从低位开始存储， 先输出每一字节，依次..
+void showvar3(int var)
+{
+  typedef unsigned char uc;
+  uc * p = (uc*)&var;
+//  p = p + 3;
+  for (int w = 0; w < sizeof(var); w++, ++p)
+  {
+    uc byte01 = 0x80;
+    for (int i = 0; i < 8; i++)
+    {
+      putchar(*p & (byte01) ? '1': '0');
+      byte01 >>= 1;  
+    }
+//     *p & (0x80 >> i) ? printf("1") : printf("0");
+    printf(" ");
+  }  
+  
+}
+int main()
+{
+    showvar(0x3276ff01); 
+    printf("\n");
+    showvar2(0x3276ff01); 
+    printf("\n");
+    showvar3(0x3276ff01); 
+
+  std::printf("%s", "1");
+}
+
+------C63F89010A5C4CCB2F9D9C2869D571F3
+Content-Type: application/x-pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+
+MIIFIgYJKoZIhvcNAQcCoIIFEzCCBQ8CAQExCzAJBgUrDgMCGgUAMAsGCSqGSIb3
+DQEHAaCCAtgwggLUMIICPaADAgECAgkArnSW2qHD/cQwDQYJKoZIhvcNAQELBQAw
+gYIxCzAJBgNVBAYTAkNOMRIwEAYDVQQIDAlHdWFuZ0RvbmcxETAPBgNVBAcMCFNo
+ZW56aGVuMQ0wCwYDVQQKDAROT05FMQ0wCwYDVQQLDAROT05FMQwwCgYDVQQDDANk
+ZXYxIDAeBgkqhkiG9w0BCQEWEWRldjEyM0BkZXYxMjMuY29tMB4XDTE2MDQxNjA5
+MjkwM1oXDTE5MDQxNjA5MjkwM1owgYIxCzAJBgNVBAYTAkNOMRIwEAYDVQQIDAlH
+dWFuZ0RvbmcxETAPBgNVBAcMCFNoZW56aGVuMQ0wCwYDVQQKDAROT05FMQ0wCwYD
+VQQLDAROT05FMQwwCgYDVQQDDANkZXYxIDAeBgkqhkiG9w0BCQEWEWRldjEyM0Bk
+ZXYxMjMuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJLwk2MLXE+9Ns
+fjkm6rbw+/WibcMubd7jenMOMa/9dG221PtTxrI6Mw08p91EWGFrp9VXXfCQhcby
+wRYReBdVzpgX8+ffC9y3vZNCiXuLmr/NdgxC+eDynS1puFXUrTt5eAKbTOWCbAmT
+luywb2kQwqqGyWaP7lTfa+uEAtAPDwIDAQABo1AwTjAdBgNVHQ4EFgQU72SXBbgT
+NOhAJrlezBzkjZx7vHUwHwYDVR0jBBgwFoAU72SXBbgTNOhAJrlezBzkjZx7vHUw
+DAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOBgQAdmxBHAQqR1CEvJ8DRMtqE
+bZ2pvwQnZeaUa2y6c6PzJka7E8Cpr6S/VKSTKS37yTkEh2DDu6Kt8OxV9B43Q99G
+PgWeZdtmKIJWfIIjWj9c7tk4Eqg2eeyhwNuyqDVcXQ1j6VL7Nf3is2Q+P7idElfN
+0+4xR2+IMrCI30b5lwvosTGCAhIwggIOAgEBMIGQMIGCMQswCQYDVQQGEwJDTjES
+MBAGA1UECAwJR3VhbmdEb25nMREwDwYDVQQHDAhTaGVuemhlbjENMAsGA1UECgwE
+Tk9ORTENMAsGA1UECwwETk9ORTEMMAoGA1UEAwwDZGV2MSAwHgYJKoZIhvcNAQkB
+FhFkZXYxMjNAZGV2MTIzLmNvbQIJAK50ltqhw/3EMAkGBSsOAwIaBQCggdgwGAYJ
+KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTYwNDE2MDkz
+NjQ5WjAjBgkqhkiG9w0BCQQxFgQUwMem2QFAs+aY+U+sR6uC0W3NVHwweQYJKoZI
+hvcNAQkPMWwwajALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAsGCWCGSAFlAwQB
+AjAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYF
+Kw4DAgcwDQYIKoZIhvcNAwICASgwDQYJKoZIhvcNAQEBBQAEgYAj8TAbf/TLz6OI
+W7mkRsPVkmqsTI8TEz66Iingz53SgQ22LSLEK/NE+xgFVOGfksISjeuGbp8cCVSh
+klYNQN7AJhcAn5EQdqzE7IAUDbbIhi7vzStdHhSil+vhw/pKdnrhnMHarWC7YDyn
+XHFNXu1gjzvh8RM8Q3lnPhix3IoiBw==
+
+------C63F89010A5C4CCB2F9D9C2869D571F3--
+

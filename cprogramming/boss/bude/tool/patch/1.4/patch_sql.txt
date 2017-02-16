@@ -1,0 +1,6 @@
+#patch sql 4, patching by John@ 2005/8/20
+FOUR::SECOND::LCU_CS_001
+FOUR::SECOND::LCU_CS_025
+FOUR::SECOND::LCU_CS_001
+FOUR::SECOND::LCU_CS_036
+                       

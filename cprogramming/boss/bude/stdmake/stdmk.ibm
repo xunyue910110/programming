@@ -1,0 +1,3 @@
+TPINIT_O	= ${TUXDIR}/lib/tpinit.o
+ICONV_LIB	= -liconv
+include $(STDMAKE_ROOT)/stdmk.ibm$(APP_BIT)

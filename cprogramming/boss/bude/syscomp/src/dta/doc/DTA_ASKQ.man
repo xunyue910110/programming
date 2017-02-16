@@ -1,0 +1,65 @@
+.TH DTA_ASKQ 3
+
+.ds )H Linkage Company
+.ds ]W Release 0.2.0: August 2000
+
+.SH NAME
+DTA_ASKQ() - Inquire queue attribute.
+
+.SH SYNOPSIS
+#include "dta.h"
+
+int DTA_ASKQ(DTAHQUEUE hqueue,long *maxmsgs,long *livmsgs);
+
+.SH PARAMETERS
+.TP 15
+hqueue       -
+Handle of queue.
+.TP
+maxmsgs      -
+Maximum message number in queue.
+.TP
+livmsgs      -
+Message number in queue.
+
+.SH DESCRIPTION
+DTA_ASKQ() get attributes of queue such as maxmsgs, livmsgs.
+To compile application, the library libdta.a should be linked.
+
+.SH RETURN VALUE
+.TP 15
+zero         -
+Successful completion.
+.TP
+nonzero      -
+Failure. Described in ERRORS.
+
+.SH ERRORS
+.TP 30
+.ER DTARC_FILESEEK_ERROR
+fseek() failed.
+.TP
+.ER DTARC_FILEREAD_ERROR
+fread() failed.
+
+.SH EXAMPLES
+.RS 10
+DTAHQUEUE hqueue;
+
+long maxmsgs;
+
+long livmsgs;
+
+DTA_OPENQ(&hqueue,"myqueue1");
+
+DTA_ASKQ(hqueue,&maxmsgs,&livmsgs);
+
+printf("maxmsgs:%ld livmsgs:%ld\\n",maxmsgs,livmsgs);
+
+DTA_CLOSEQ(hqueue);
+
+.SH SEE ALSO
+
+
+
+

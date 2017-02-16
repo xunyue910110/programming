@@ -1,0 +1,56 @@
+#
+#  @(#) $Author: sunam $ SRevision:1.0.0 $ $Date: 2011/04/15 07:39:39 $
+#
+CC = CC
+CC_HOME = /opt/SUNWspro/prod
+APP_HOME = /app/ebossdev/crm/src/acctmanm/src/tmp/dataset
+
+
+SRC_DIR 	= $(APP_HOME)
+LIB_DIR 	= $(APP_HOME)
+BIN_DIR 	= $(APP_HOME)
+
+
+#编译器INCLUDE目录
+INCLUDE 	= -I.
+
+
+
+#LIB
+LIB_PATH = -L. -L../lib
+
+
+LIB = 
+
+
+#编译参数
+SOME_DEFINE = -D _DEBUG
+
+
+
+SUFF=
+AR = CC
+ARFLAGS = -xar -o
+
+#dataset lib file
+DATASET_LIB = libdataset$(SUFF).a 
+
+DATASET_OBJS = DataSet.o
+
+libdataset: $(DATASET_OBJS)
+	rm -f $(LIB_DIR)/$(DATASET_LIB)
+	$(AR) $(ARFLAGS) $(LIB_DIR)/$(DATASET_LIB) $(LIB_DIR)/DataSet.o
+
+
+#dataset objects
+DataSet.o:
+	$(CC) $(SOME_DEFINE) $(INCLUDE)  -c DataSet.cpp -o $(LIB_DIR)/DataSet.o
+TestWrite.o:
+	$(CC) $(SOME_DEFINE) $(INCLUDE)  -c testWrite.cpp -o $(LIB_DIR)/testWrite.o
+TestWrite: $(libdataset)
+	$(CC) $(SOME_DEFINE) $(LIB_PATH) $(LIB_DIR)/testWrite.o -o $(BIN_DIR)/testWrite -ldataset
+
+TestRead.o:
+	$(CC) $(SOME_DEFINE) $(INCLUDE)  -c testRead.cpp -o $(LIB_DIR)/testRead.o
+TestRead: $(libdataset)
+	$(CC) $(SOME_DEFINE) $(LIB_PATH) $(LIB_DIR)/testRead.o -o $(BIN_DIR)/testRead -ldataset

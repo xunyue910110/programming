@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <sqlca.h>
+
+EXEC SQL BEGIN DECLARE SECTION; 
+  char *uid = "scott/tiger@ben";
+EXEC SQL END DECLARE SECTION;
+
+int main()
+{
+  EXEC SQL CONNECT :uid;
+
+  if ( sqlca.sqlcode != 0)
+  {
+    printf("connect failed.\n");
+    printf("sqlcode=%d, sqlmsg:%s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
+    exit(0);
+  }
+  printf("connect success.\n");
+  return 0;
+}

@@ -1,0 +1,16 @@
+chmod -R +x *
+
+cp -R stdmake $BUDE_HOME/
+
+echo '\n build lang \n'
+sh buildlang
+
+echo '\n build syscomp \n'
+sh buildsyscomp
+
+#echo '\n build bizcomp \n'
+#sh buildbizcomp
+
+#echo '\n build frame \n'
+#sh buildframe
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="GBK" standalone="no" ?>
+<!DOCTYPE EXAMPLE SYSTEM  "./include.dtd">
+<EXAMPLE prop1="gnome is great" prop2="&amp; linux too">
+  <head>   
+    <title>Welcome to Gnome</title>  
+    </head>  
+    <chapter id="3" content="abc">   
+    <title>The Linux adventure1</title>   
+    <title>The Linux adventure2</title>
+    <p>bla bla bla ...</p>   
+    <image href="linus.gif" width="230" />   
+    <image href="fad"><!-- comment1 fffffffffffffffff --> adfccccc<!-- comment2 asadfdfdfdf --> </image>
+    &indb_gprs_config;
+    </chapter>
+  &indb_gprs_config;
+  
+  <chapter>
+   <title>Chapter 2</title>
+   <p>this is chapter 2 ...</p>
+  </chapter>
+  <chapter>
+   <title>Chapter 3</title>
+   
+  </chapter>
+  <A><![CDATA[
+      cdata test!
+      ]]></A>
+</EXAMPLE>
+
+

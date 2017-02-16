@@ -1,0 +1,6 @@
+Console Tools [Version 0.5]
+<c> Copyright 1997-2007 Linkage Corp.
+
+help all     查看所有帮助
+help command 查看指定命令的帮助
+命令以";"结束
