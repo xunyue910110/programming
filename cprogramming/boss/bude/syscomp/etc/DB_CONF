@@ -1,6 +1,0 @@
-iwmcaller	qazwsx	eboss
-#This file specify the username password and sid of Oracle Database
-where td_m_naming exist;
-#the format is follow
-USERNAME	PASSWORD	SID
-#only the first line is read!

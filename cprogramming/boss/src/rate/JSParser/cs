@@ -1,1 +1,0 @@
-xlC -brtl -q64 -bhalt:5 -bmaxdata:12000000000 Sample.cpp -L./ -L/billing/lib -L/billing/lib/mdb -L/billing/altibase/lib/ -L../lib -L/billing/bude/syscomp/lib -L/oracle/product/10.2/db/lib -L. -L/billing/bude/lang/lib -L/billing/bude/syscomp/lib -ljs16 -ljshlp -lratejsparser

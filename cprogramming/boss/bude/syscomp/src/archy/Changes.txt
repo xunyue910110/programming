@@ -1,4 +1,0 @@
-ArchyLib Changes Records:
-
-2003-10-09 ftp_client.cpp 中读取数据超时由3秒更正为m_datatimeout。
-2004-6-22  添加HttpRequest.cpp(.hpp), 封装get,post 方法

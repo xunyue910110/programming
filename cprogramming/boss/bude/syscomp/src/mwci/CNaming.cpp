@@ -1,2 +1,0 @@
-#include "mwci/CNaming.h"
-

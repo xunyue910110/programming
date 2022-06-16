@@ -1,3 +1,0 @@
-# Polish translation for GNU make.
-# Copyright (C) 1996 Free Software Foundation, Inc.
-# Pawe

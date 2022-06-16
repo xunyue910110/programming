@@ -1,9 +1,0 @@
-
-# $Id: Makefile.in,v 1.1 2011/04/15 07:56:29 sunam Exp $
-
-LIB_PROJ = regexp
-SUB_PROJ = test
-REQUIRES = LocalPCRE
-
-srcdir = @srcdir@
-include @builddir@/Makefile.meta
